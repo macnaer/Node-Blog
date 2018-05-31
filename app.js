@@ -12,10 +12,13 @@ const expressValidator = require('express-validator');
 const mongo = require('mongodb');
 const db = require('mongoose');
 
-db.connect("mongodb://localhost/nodeblog");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+db.connect("mongodb://localhost/nodeblog")
+    .then(() => console.log('Connected...'))
+    .catch(e => console.log(e));
+
+const indexRouter = require('./routes/index');
+const postsRouter = require('./routes/posts');
 
 var app = express();
 
@@ -64,7 +67,7 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
