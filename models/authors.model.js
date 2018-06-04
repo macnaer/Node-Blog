@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-const CategorySchema = new Schema({
-    category:{
+const AuthorSchema = new Schema({
+    author:{
         type: String,
         required: true
     }
 });
 
-mongoose.model('category', CategorySchema);
+mongoose.model('author', AuthorSchema);

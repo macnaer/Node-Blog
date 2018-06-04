@@ -2,25 +2,27 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const logger = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const multer = require('multer');
-const upload = multer({dest: 'uploads/'})
+const upload = multer({dest: 'uploads/'});
 const moment = require('moment');
 const expressValidator = require('express-validator');
 const mongo = require('mongodb');
-const db = require('mongoose');
+const mongooes = require('mongoose');
 
 
-db.connect("mongodb://localhost/nodeblog")
+mongooes.connect("mongodb://localhost/nodeblog")
     .then(() => console.log('Connected...'))
     .catch(e => console.log(e));
 
 const indexRouter = require('./routes/index');
 const postsRouter = require('./routes/posts');
+const categoriesRouter = require('./routes/categories');
+const authorsRouter = require('./routes/authors');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -62,12 +64,14 @@ app.use(expressValidator({
 }));
 
 app.use(function (req, res, next) {
-    req.db = db;
+    req.mongooes = mongooes;
     next();
 });
 
 app.use('/', indexRouter);
 app.use('/posts', postsRouter);
+app.use('/categories', categoriesRouter);
+app.use('/authors', authorsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

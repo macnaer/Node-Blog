@@ -12,19 +12,12 @@ block content
                             .row
                                 .col-xs-12
                                     .category-list
-                                        ul
-                                            li
-                                                a(href='#') Study
-                                            li
-                                                a(href='#') Work
-                                            li
-                                                a(href='#') Travel
-                                            li
-                                                a(href='#') Rest
-                                            li
-                                                a(href='#') Beauty
-                                            li
-                                                a(href='#') Design
+                                        .category-list
+                                            if categories
+                                                for category in categories
+                                                    ul
+                                                        li
+                                                            a(href='#')=category.category
                             .row.newsletter
                                 .col-xs-12
                                     .newsletter-content.hidden-sm.hidden-xs
@@ -49,29 +42,34 @@ block content
                         .row.blog-content
                             .col-lg-9.col-md-12
                                 .row
-                                    .col-md-2.col-sm-2.col-lg-2.hidden-xs.left-blok
-                                        .day 23
-                                        .month June
-                                        .reviews 120 reviews
-                                        .comments 3 comments
-                                        .share Share  article
-                                    .col-md-10.col-lg-10.col-sm-10.middle-block
-                                        .blog-tags
-                                            i.fa.fa-tags(aria-hidden='true')
-                                            | Work
-                                        img(src='../images/blog-img.png', alt='')
-                                        .row.visible-xs.left-blok
-                                            .col-xs-6
+                                    if posts
+                                        for post in posts
+                                            .col-md-2.col-sm-2.col-lg-2.hidden-xs.left-blok
                                                 .day 23
                                                 .month June
-                                            .col-xs-6
                                                 .reviews 120 reviews
                                                 .comments 3 comments
                                                 .share Share  article
-                                        h4 Where does it come from
-                                        p=post
+                                            .col-md-10.col-lg-10.col-sm-10.middle-block
+                                                if categories
+                                                    for category in categories
+                                                        .blog-tags
+                                                            i.fa.fa-tags(aria-hidden='true')=category.category
+                                                img(src='../images/#{post.mainimage}', alt='')
+                                                .row.visible-xs.left-blok
+                                                    .col-xs-6
+                                                        .day 23
+                                                        .month June
+                                                    .col-xs-6
+                                                        .reviews 120 reviews
+                                                        .comments 3 comments
+                                                        .share Share  article
+                                                h4=post.title
+                                                p=post.post
 
-                                        a.btn-transparent(href='blog-internal.html') Continue
+                                                a.btn-transparent(href='posts/show/#{post.id}') Continue
+                                        else
+                                            h3 Posts not found
                             .col-lg-3.visible-lg
                                 .row
                                     .col-lg-12.visible-lg.right-block

@@ -3,26 +3,38 @@ let router = express.Router();
 const multer = require('multer');
 const upload = multer({dest: 'uploads/'});
 const mongo = require('mongodb');
-const db = require('mongoose');
+const mongooes = require('mongoose');
 
-/* GET home page. */
+
 router.get('/add', function (req, res, next) {
-    res.render('addpost', {
-        title: "Add post"
-    });
+    require('../models/categories.model');
+    require('../models/authors.model');
+    const Author = mongooes.model('author');
+    const Categories = mongooes.model('category');
+    Categories.find({})
+        .then(categories => {
+            Author.find({})
+                .then((authors) => {
+                    res.render('addpost', {
+                        authors: authors,
+                        categories: categories
+                    });
+                })
+        })
+        .catch(e => console.log(e))
 });
 
 router.post('/add', upload.single('mainimage'), function (req, res, next) {
         let title = req.body.title;
-        // let category = req.body.category;
+        let category = req.body.category;
         let post = req.body.post;
         let author = req.body.author;
         let date = new Date();
 
         if (req.file) {
-            let mainimage = req.file.name;
+            var mainimage = req.file.name;
         } else {
-            let mainimage = 'default.png';
+            var mainimage = 'Default.png';
         }
 
         req.checkBody('title', 'Title field is required').notEmpty();
@@ -34,32 +46,16 @@ router.post('/add', upload.single('mainimage'), function (req, res, next) {
                 "errors": errors
             });
         } else {
-            // let posts = db.get('posts');
-            // posts.insert({
-            //     "title": title,
-            //     "body": body,
-            //     "category": category,
-            //     "date": date,
-            //     "author": author,
-            //     "mainimage": mainimage
-            // }, function (err, post) {
-            //     if (err) {
-            //         res.send(err);
-            //     } else {
-            //         req.flash('success', 'Post Added');
-            //         res.location('/');
-            //         res.redirect('/');
-            //     }
-            // });
             require('../models/posts.model');
-            const Posts = db.model('posts');
+            const Posts = mongooes.model('posts');
 
             const addPost = new Posts({
                 title: title,
                 post: post,
                 author: author,
-                // date: date,
-                // author: author,
+                category: category,
+                date: date,
+                mainimage: mainimage
             });
 
             addPost.save()
@@ -69,19 +65,7 @@ router.post('/add', upload.single('mainimage'), function (req, res, next) {
                     res.location('/');
                     res.redirect('/');
                 })
-                .catch(e => console.log(e)),
-
-                function (err, post) {
-                    if (err) {
-                        res.send(err);
-                    } else {
-                        req.flash('success', 'Post Added');
-                        res.location('/');
-                        res.redirect('/');
-                    }
-
-
-                }
+                .catch(e => console.log(e))
         }
 
     }
