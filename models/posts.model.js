@@ -18,6 +18,10 @@ const PostsSchema = new Schema({
         type: String,
         required: true
     },
+    mainimage:{
+        type: String,
+        required: false
+    }
 });
 
 mongoose.model('posts', PostsSchema);

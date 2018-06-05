@@ -40,6 +40,12 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.locals.moment = require('moment');
+app.locals.blogPreview = function (text, length) {
+    let preview = text.substring(0, length);
+    return preview;
+};
+
 app.use(session({
     secret: 'secret',
     saveUninitialized: true,

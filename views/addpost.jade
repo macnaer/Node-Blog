@@ -33,6 +33,5 @@ block content
             script(src='/ckeditor/ckeditor.js')
             script
                 | ClassicEditor.create( document.querySelector( '#post' ) ).then( editor => {console.log( editor );} ).catch( error => {console.error( error );} );
-                //| CKEDITOR.replace('body');
 
     include footer

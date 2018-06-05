@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 const multer = require('multer');
-const upload = multer({dest: 'uploads/'});
+const upload = multer({dest: './public/uploads/'});
 const mongo = require('mongodb');
 const mongooes = require('mongoose');
 
@@ -32,10 +32,13 @@ router.post('/add', upload.single('mainimage'), function (req, res, next) {
         let date = new Date();
 
         if (req.file) {
-            var mainimage = req.file.name;
-        } else {
+            var mainimage = req.file.filename;
+        }
+        else{
             var mainimage = 'Default.png';
         }
+
+
 
         req.checkBody('title', 'Title field is required').notEmpty();
         req.checkBody('post', 'Body field is required').notEmpty();

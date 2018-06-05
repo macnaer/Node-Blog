@@ -55,7 +55,7 @@ block content
                                                     for category in categories
                                                         .blog-tags
                                                             i.fa.fa-tags(aria-hidden='true')=category.category
-                                                img(src='../images/#{post.mainimage}', alt='')
+                                                img(src='uploads/#{post.mainimage}', alt='')
                                                 .row.visible-xs.left-blok
                                                     .col-xs-6
                                                         .day 23
@@ -65,7 +65,7 @@ block content
                                                         .comments 3 comments
                                                         .share Share  article
                                                 h4=post.title
-                                                p!=post.post
+                                                p!=blogPreview(post.post, 800)
 
                                                 a.btn-transparent(href='posts/show/#{post.id}') Continue
                                         else
