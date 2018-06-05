@@ -13,14 +13,15 @@ router.get('/', function (req, res, next) {
     Posts.find({})
         .then(posts => {
             Categories.find({})
-                .then((authors, categories) => {
+                .then(categories => {
                     Authors.find({})
-                        .then(
-                            res.render('index', {
-                                posts: posts,
-                                categories: categories,
-                                authors: authors
-                            })
+                        .then(authors => {
+                                res.render('index', {
+                                    posts: posts,
+                                    categories: categories,
+                                    authors: authors
+                                })
+                            }
                         )
                         .catch(err => console.log(err))
                 })

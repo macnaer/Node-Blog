@@ -34,10 +34,9 @@ router.post('/add', upload.single('mainimage'), function (req, res, next) {
         if (req.file) {
             var mainimage = req.file.filename;
         }
-        else{
+        else {
             var mainimage = 'Default.png';
         }
-
 
 
         req.checkBody('title', 'Title field is required').notEmpty();
@@ -70,8 +69,19 @@ router.post('/add', upload.single('mainimage'), function (req, res, next) {
                 })
                 .catch(e => console.log(e))
         }
-
     }
 );
+
+router.get('/show/:id', function (req, res, next) {
+    require('../models/posts.model');
+    const singePost = mongooes.model('posts');
+    singePost.findById(req.params.id)
+        .then(post => {
+            res.render('singlepost', {
+                post: post,
+            })
+        })
+        .catch(e => console.log(e))
+});
 
 module.exports = router;
