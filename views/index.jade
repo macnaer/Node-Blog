@@ -65,7 +65,7 @@ block content
                                                         .comments 3 comments
                                                         .share Share  article
                                                 h4=post.title
-                                                p=post.post
+                                                p!=post.post
 
                                                 a.btn-transparent(href='posts/show/#{post.id}') Continue
                                         else
