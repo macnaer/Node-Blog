@@ -21,6 +21,10 @@ const PostsSchema = new Schema({
     mainimage:{
         type: String,
         required: false
+    },
+    date:{
+        type: Date,
+        required: true
     }
 });
 

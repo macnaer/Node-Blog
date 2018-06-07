@@ -57,7 +57,7 @@ router.post('/add', upload.single('mainimage'), function (req, res, next) {
                 author: author,
                 category: category,
                 date: date,
-                mainimage: mainimage
+                mainimage: mainimage,
             });
 
             addPost.save()

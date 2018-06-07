@@ -45,7 +45,7 @@ block content
                                     if posts
                                         for post in posts
                                             .col-md-2.col-sm-2.col-lg-2.hidden-xs.left-blok
-                                                .day 23
+                                                .day #{post.date}
                                                 .month June
                                                 .reviews 120 reviews
                                                 .comments 3 comments
@@ -56,6 +56,7 @@ block content
                                                         .blog-tags
                                                             i.fa.fa-tags(aria-hidden='true')=category.category
                                                 img(src='uploads/#{post.mainimage}', alt='')
+                                                p.posted Posted in #{post.category} by #{post.author}
                                                 .row.visible-xs.left-blok
                                                     .col-xs-6
                                                         .day 23
