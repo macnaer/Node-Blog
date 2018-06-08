@@ -44,27 +44,26 @@ block content
                                 .row
 
                                     .col-md-2.col-sm-2.col-lg-2.hidden-xs.left-blok
-                                        .day 23
-                                        .month June
+                                        .day #{moment(post.date).format("DD")}
+                                        .month #{moment(post.date).format("MMM")}
                                         .reviews 120 reviews
                                         .comments 3 comments
                                         .share Share  article
                                     .col-md-10.col-lg-10.col-sm-10.middle-block
                                         .blog-tags
                                             i.fa.fa-tags(aria-hidden='true')=post.category
-                                    img(src='uploads/#{post.mainimage}', alt='')
-                                    .row.visible-xs.left-blok
-                                        .col-xs-6
-                                            .day 23
-                                            .month June
-                                        .col-xs-6
-                                            .reviews 120 reviews
-                                            .comments 3 comments
-                                            .share Share  article
-                                    h4=post.title
-                                    p!=post.post
+                                        img(src='/uploads/#{post.mainimage}', alt='')
+                                        .row.visible-xs.left-blok
+                                            .col-xs-6
+                                                .day 23
+                                                .month June
+                                            .col-xs-6
+                                                .reviews 120 reviews
+                                                .comments 3 comments
+                                                .share Share  article
+                                        h4=post.title
+                                        p!=post.post
 
-                                    a.btn-transparent(href='posts/show/#{post.id}') Continue
 
                             .col-lg-3.visible-lg
                                 .row
@@ -73,7 +72,7 @@ block content
                                             .sidebar-lines
                                                 .sidebar-header About
                                                 .img
-                                                    img(src='../images/blog-img-sidebar.png', alt='')
+                                                    img(src='/images/blog-img-sidebar.png', alt='')
                                                 p
                                                     | It is a long established fact that a reader will be distracted by the reale content of pag when looking at its layout. The point
                                                     | of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here',
@@ -104,7 +103,7 @@ block content
                                                 .one-post
                                                     .sidebar-header Posts
                                                     .img
-                                                        img(src='../images/post-img.png', alt='')
+                                                        img(src='/images/post-img.png', alt='')
                                                     a.btn-transparent(href='#') Study
                                                     i.fa.fa-eye(aria-hidden='true')
                                                     i.fa.fa-comment-o(aria-hidden='true')
@@ -114,7 +113,7 @@ block content
                                                         | using 'Content here, content here', making it look like readable English.
                                                 .one-post
                                                     .img
-                                                        img(src='../images/post-img.png', alt='')
+                                                        img(src='/images/post-img.png', alt='')
                                                     a.btn-transparent(href='#') Study
                                                     i.fa.fa-eye(aria-hidden='true')
                                                     i.fa.fa-comment-o(aria-hidden='true')
