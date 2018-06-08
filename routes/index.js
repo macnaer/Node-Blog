@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
     const Authors = mongoose.model('author');
     const Posts = mongoose.model('posts');
     const Categories = mongoose.model('category');
-    Posts.find({})
+    Posts.find({}).sort({"date": -1})
         .then(posts => {
             Categories.find({})
                 .then(categories => {

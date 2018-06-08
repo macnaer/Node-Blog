@@ -45,8 +45,8 @@ block content
                                     if posts
                                         for post in posts
                                             .col-md-2.col-sm-2.col-lg-2.hidden-xs.left-blok
-                                                .day #{post.date}
-                                                .month June
+                                                .day #{moment(post.date).format("DD")}
+                                                .month #{moment(post.date).format("MMM")}
                                                 .reviews 120 reviews
                                                 .comments 3 comments
                                                 .share Share  article
