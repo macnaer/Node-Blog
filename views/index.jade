@@ -17,7 +17,7 @@ block content
                                                 for category in categories
                                                     ul
                                                         li
-                                                            a(href='#')=category.category
+                                                            a(href='posts/sort/#{category.category}')=category.category
                             .row.newsletter
                                 .col-xs-12
                                     .newsletter-content.hidden-sm.hidden-xs
@@ -54,13 +54,15 @@ block content
                                                 if categories
                                                     for category in categories
                                                         .blog-tags
-                                                            i.fa.fa-tags(aria-hidden='true')=category.category
+                                                            i.fa.fa-tags(aria-hidden='true')=post.category
                                                 img(src='uploads/#{post.mainimage}', alt='')
-                                                p.posted Posted in #{post.category} by #{post.author}
+                                                span.posted   Posted in
+                                                    a(href='posts/sort/#{post.category}')  #{post.category}
+                                                    span  by #{post.author}
                                                 .row.visible-xs.left-blok
                                                     .col-xs-6
-                                                        .day 23
-                                                        .month June
+                                                        .day #{moment(post.date).format("DD")}
+                                                        .month #{moment(post.date).format("MMM")}
                                                     .col-xs-6
                                                         .reviews 120 reviews
                                                         .comments 3 comments

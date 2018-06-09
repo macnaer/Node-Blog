@@ -3,14 +3,14 @@ let router = express.Router();
 const multer = require('multer');
 const upload = multer({dest: './public/uploads/'});
 const mongo = require('mongodb');
-const mongooes = require('mongoose');
+const mongoose = require('mongoose');
 
 
 router.get('/add', function (req, res, next) {
     require('../models/categories.model');
     require('../models/authors.model');
-    const Author = mongooes.model('author');
-    const Categories = mongooes.model('category');
+    const Author = mongoose.model('author');
+    const Categories = mongoose.model('category');
     Categories.find({})
         .then(categories => {
             Author.find({})
@@ -49,7 +49,7 @@ router.post('/add', upload.single('mainimage'), function (req, res, next) {
             });
         } else {
             require('../models/posts.model');
-            const Posts = mongooes.model('posts');
+            const Posts = mongoose.model('posts');
 
             const addPost = new Posts({
                 title: title,
@@ -74,12 +74,39 @@ router.post('/add', upload.single('mainimage'), function (req, res, next) {
 
 router.get('/show/:id', function (req, res, next) {
     require('../models/posts.model');
-    const singePost = mongooes.model('posts');
+    const singePost = mongoose.model('posts');
     singePost.findById(req.params.id)
         .then(post => {
             res.render('singlepost', {
                 post: post,
             })
+        })
+        .catch(e => console.log(e))
+});
+
+router.get('/sort/:category', function (req, res, next) {
+    require('../models/posts.model');
+    require('../models/categories.model');
+    require('../models/authors.model');
+    const Authors = mongoose.model('author');
+    const Posts = mongoose.model('posts');
+    const Categories = mongoose.model('category');
+    Posts.find({category: req.params.category})
+        .then(posts => {
+            Categories.find({})
+                .then(categories => {
+                    Authors.find({})
+                        .then(authors => {
+                                res.render('index', {
+                                    posts: posts,
+                                    categories: categories,
+                                    authors: authors
+                                });
+                            }
+                        )
+                        .catch(err => console.log(err))
+                })
+                .catch(e => console.log(e))
         })
         .catch(e => console.log(e))
 });
