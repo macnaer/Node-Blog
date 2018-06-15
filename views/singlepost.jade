@@ -63,6 +63,35 @@ block content
                                                 .share Share  article
                                         h4=post.title
                                         p!=post.post
+                                        hr
+                                        if comments
+                                            h3 Comments
+                                            for comment in comments
+                                                .comment
+                                                    p.comment-name #{comment.name}
+                                                    p.comment-body #{comment.comment}
+                                            br
+                                        else
+                                            h3 Posts not found
+                                    h3 Add Comment
+                                    if errors
+                                        ul.errors
+                                            each error, i in errors
+                                                li.alert.alert-danger #{error.msg}
+                                    form.comment-form(method='post', action='/posts/addcomment')
+                                        input(name='postid', type='hidden', value='#{post._id}')
+                                        .form-group
+                                            label Name
+                                            input.form-control(type='text', name='name', required)
+                                        .form-group
+                                            label Email
+                                            input.form-control(type='text', name='email', required)
+                                        .form-group
+                                            label Body
+                                            textarea.form-control(type='text', name='comment', required)
+                                        br
+                                        input.btn.btn-default(type='submit', name='submit', value='Add Comment')
+
 
 
                             .col-lg-3.visible-lg
@@ -131,6 +160,7 @@ block content
                                                     p
                                                         | It is a long established fact that a reader will be distracted by the  letters, as opposed to
                                                         | using 'Content here, content here', making it look like readable English.
+
 
 
     include footer

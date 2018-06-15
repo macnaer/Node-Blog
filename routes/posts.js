@@ -62,7 +62,6 @@ router.post('/add', upload.single('mainimage'), function (req, res, next) {
 
             addPost.save()
                 .then((post) => {
-                    console.log(post);
                     req.flash('success', 'Post Added');
                     res.location('/');
                     res.redirect('/');
@@ -74,12 +73,19 @@ router.post('/add', upload.single('mainimage'), function (req, res, next) {
 
 router.get('/show/:id', function (req, res, next) {
     require('../models/posts.model');
+    require('../models/comments.model');
     const singePost = mongoose.model('posts');
+    const Comment = mongoose.model('comments');
     singePost.findById(req.params.id)
         .then(post => {
-            res.render('singlepost', {
-                post: post,
-            })
+            Comment.find({postid: req.params.id})
+                .then(comment => {
+                    res.render('singlepost', {
+                        post: post,
+                        comments: comment
+                    })
+                })
+                .catch(e => console.log(e))
         })
         .catch(e => console.log(e))
 });
@@ -110,5 +116,44 @@ router.get('/sort/:category', function (req, res, next) {
         })
         .catch(e => console.log(e))
 });
+
+router.post('/addcomment', function (req, res, next) {
+        let postid = req.body.postid;
+        let name = req.body.name;
+        let email = req.body.email;
+        let comment = req.body.comment;
+        let commentDate = new Date();
+
+        req.checkBody('name', 'Name field is required').notEmpty();
+        req.checkBody('email', 'Email field is required').isEmail();
+        req.checkBody('comment', 'Comment field is required').notEmpty();
+
+        let errors = req.validationErrors();
+        if (errors) {
+            res.render('singlepage', {
+                "errors": errors
+            });
+        } else {
+            require('../models/comments.model');
+            const Comment = mongoose.model('comments');
+
+            const addComment = new Comment({
+                postid: postid,
+                name: name,
+                email: email,
+                comment: comment,
+                commentDate: commentDate,
+            });
+
+            addComment.save()
+                .then((comment) => {
+                    req.flash('success', 'Comment Added');
+                    res.location('/posts/show/' + postid);
+                    res.redirect('/posts/show/' + postid);
+                })
+                .catch(e => console.log(e))
+        }
+    }
+);
 
 module.exports = router;
