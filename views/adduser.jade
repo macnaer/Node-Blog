@@ -1,0 +1,28 @@
+extends layout
+
+block content
+    div.container
+        h1=title
+        ul.errors
+            if errors
+                each error, i in errors
+                    li.alert.alert-danger #{error.msg}
+        .col-sm-6
+            form(method='post', action='/register/add')
+                .form-group
+                    label Username
+                    input.form-control(name='username', type='text')
+                .form-group
+                    label Email
+                    input.form-control(name='email', type='email')
+                .form-group
+                    label Password
+                    input.form-control(name='password', type='password')
+                .form-group
+                    label Retype password
+                    input.form-control(name='re-password', type='password')
+                input.btn.btn-default(name='submit', type='submit', value='Save')
+        .col-sm-6
+
+
+    include footer

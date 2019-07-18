@@ -13,14 +13,19 @@ const mongo = require('mongodb');
 const mongooes = require('mongoose');
 
 
-mongooes.connect("mongodb://localhost/nodeblog")
+mongooes.connect("mongodb://nodeblog:nodeblog1@ds347467.mlab.com:47467/nodeblog")
     .then(() => console.log('Connected...'))
     .catch(e => console.log(e));
+
+const urlecodeParser = bodyParser.urlencoded({
+    extended: false
+});
 
 const indexRouter = require('./routes/index');
 const postsRouter = require('./routes/posts');
 const categoriesRouter = require('./routes/categories');
 const authorsRouter = require('./routes/authors');
+const registerRouter = require('./routes/register');
 
 const app = express();
 
@@ -78,6 +83,7 @@ app.use('/', indexRouter);
 app.use('/posts', postsRouter);
 app.use('/categories', categoriesRouter);
 app.use('/authors', authorsRouter);
+app.use('/register', registerRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
